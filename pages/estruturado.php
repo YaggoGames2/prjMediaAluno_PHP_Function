@@ -1,7 +1,7 @@
 <?php
 function validarEntradas($paramNome, $paramNotas)
 {
-    if (isset($paramNome) && count($paramNotas) == 0 ||(!preg_match('/^[a-zA-Z\s]+$/', $paramNome))) {
+    if (isset($paramNome) && count($paramNotas) == 0 ||(!preg_match('/^[a-zA-Z\s]+$/', $paramNome)) && (!is_numeric($paramNotas))) {
         return false;
     } else {
         return true;
@@ -18,6 +18,7 @@ function darBoasVindas($hora){
     $hora = new DateTime();
     return $hora->format('H:i:s');
 }
+
 
 function calcularMedia($arrayNotas)
 {
@@ -96,7 +97,7 @@ if (validarEntradas($nome, $notas) == true) {
 <body>
     <main class="container">
         <h1>Performance do Aluno</h1>
-        <p><?= mostrarMensagem(darBoasVindas('Hello World Function, $hora')) ?></p>
+        <?=  mostrarMensagem(darBoasVindas($hora));?>
         <p><?= mostrarMensagem("Olá, {$nome}! Sua média é: " . number_format($media, 2, ',', '.')); ?></p>
         <p id="<?= $resultado == true ? "aprovado" : "reprovado"; ?>"><?= mostrarResultadoFinal($resultado) ?></p>
     </main>
