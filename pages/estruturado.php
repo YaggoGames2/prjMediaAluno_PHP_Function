@@ -1,24 +1,24 @@
 <?php
 function validarEntradas($paramNome, $paramNotas)
 {
-    if (isset($paramNome) && count($paramNotas) != 0) {
-        return true;
-    } else {
+    if (isset($paramNome) && count($paramNotas) == 0 ||(!preg_match('/^[a-zA-Z\s]+$/', $paramNome))) {
         return false;
+    } else {
+        return true;
         // volta para a página de calculo - redirecionamento
     }
- 
     //não pode estar em branco - ok
     //não pode ter número no nome -nok
     //itens do array devem ser números - nok
     //array não pode ser vazio -ok
 }
-function darBoasVindas()
-{
-    $hora = time(); //?
-    echo "Hello World Function, {$hora}";
+
+function darBoasVindas($hora){
+    date_default_timezone_set('America/Sao_Paulo');
+    $hora = new DateTime();
+    return $hora->format('H:i:s');
 }
- 
+
 function calcularMedia($arrayNotas)
 {
     $resultado = array_sum($arrayNotas) / count($arrayNotas);
@@ -96,6 +96,7 @@ if (validarEntradas($nome, $notas) == true) {
 <body>
     <main class="container">
         <h1>Performance do Aluno</h1>
+        <p><?= mostrarMensagem(darBoasVindas('Hello World Function, $hora')) ?></p>
         <p><?= mostrarMensagem("Olá, {$nome}! Sua média é: " . number_format($media, 2, ',', '.')); ?></p>
         <p id="<?= $resultado == true ? "aprovado" : "reprovado"; ?>"><?= mostrarResultadoFinal($resultado) ?></p>
     </main>

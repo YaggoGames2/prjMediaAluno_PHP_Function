@@ -1,7 +1,15 @@
 <?php
+ 
+function validarNotas($paramNotas){
+    foreach ($paramNotas as $nota) {
+        if (!is_numeric($nota)) { return false;}
+    }
+ 
+    return true;
+}
 function validarEntradas($paramNome, $paramNotas)
 {
-    if (isset($paramNome) && count($paramNotas) != 0){
+    if (strlen($paramNome)>=2 && validarNotas($paramNotas)==true) {
         return true;
     } else {
         return false;
@@ -52,7 +60,8 @@ function mostrarResultadoFinal($resultado)
  
 $nome = trim($_GET['nome']);
 $notas = $_GET['notas'];
-if (validarEntradas($nome, $notas) == true) {
+ 
+if (validarEntradas($nome, $notas) === true) {
     $media = calcularMedia($notas);
     $resultado = verificarAprovacao($media);
 } else {
